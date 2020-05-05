@@ -1,21 +1,188 @@
-//
-//  ContentView.swift
-//  Clone_medicall
-//
-//  Created by JU HAN LEE on 2020/05/04.
-//  Copyright © 2020 yht. All rights reserved.
-//
-
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView: View { //ContentView: 메인
     var body: some View {
-        Text("Hello, World!")
+        VStack(spacing: 0) {
+            Home()
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider { //ContentView로딩
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct Home : View { // Home: 모든 구성요소의 집합체
+    
+    @State var index = 1
+    @State var offset : CGFloat = UIScreen.main.bounds.width //yh
+    var width = UIScreen.main.bounds.width //yh
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            
+            AppBar(index: $index, offset: $offset) //offset: self.$offset
+            
+            GeometryReader {g in
+                HStack(spacing: 0) {
+                    First() //스크롤뷰
+                        .frame(width: g.frame(in : .global).width)
+
+                    Scnd()
+                        .frame(width: g.frame(in : .global).width)
+                    
+                    Third()
+                        .frame(width: g.frame(in : .global).width)
+                }
+                .offset(x: self.offset)
+            .highPriorityGesture(DragGesture()
+            .onEnded({ (value) in
+                
+                if value.translation.width > 50 { // minimun drag...
+                    print("right")
+                    self.changeView(left: false)
+                }
+                if -value.translation.width > 50 {
+                    self.changeView(left: true)
+                }
+            }))
+            
+                
+            }
+        }
+        .animation(.default)
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    func  changeView(left: Bool){
+        if left {
+            if self.index != 3 {
+                self.index += 1
+            }
+        }
+        else {
+            if self.index != 0 {
+                self.index -= 1
+            }
+        }
+        if self.index == 1 {
+            self.offset = self.width
+        }
+        else if self.index == 2 {
+            self.offset = 0
+        }
+        else {
+            self.offset = -self.width
+        }
+        // change the width based on the sisze of the tabs...
+    }
+}
+
+struct AppBar : View { //버튼을 담고있는 바
+    
+    @Binding var index : Int
+    @Binding var offset : CGFloat
+    var width = UIScreen.main.bounds.width
+    
+    
+    var body: some View {
+        VStack(alignment: .leading, content: {
+            HStack {
+                Text("메디콜 공중전화")
+                    .frame(height: 40)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.leading)
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                
+            Spacer()
+            Button(action: {
+                
+            }) {
+                Image(systemName: "gear")
+                    .imageScale(.medium)
+                    .foregroundColor(Color.white)
+                    .frame(height: 40)
+                    .padding(.horizontal)
+                    .padding(.trailing)
+                }
+            }
+            
+            HStack     {
+                Button (action: {
+                    self.index = 1
+                    self.offset = self.width
+                }) {
+                    VStack(spacing: 8) {
+                        HStack(spacing: 12) {
+                            Text("홈")
+                                .foregroundColor(self.index == 1 ? .white : Color.white.opacity(0.6))
+                        }
+                        Capsule()
+                            .fill(self.index == 1 ? Color.yellow : Color.clear)
+                            .frame(height: 4)
+                    }
+                }
+                
+                Button (action: {
+                    self.index = 2
+                    self.offset = 0
+                }) {
+                    VStack(spacing: 8) {
+                        HStack(spacing: 12) {
+                            Text("통화목록")
+                                .foregroundColor(self.index == 2 ? .white : Color.white.opacity(0.6))
+                        }
+                        Capsule()
+                            .fill(self.index == 2 ? Color.yellow : Color.clear)
+                            .frame(height: 4)
+                    }
+                }
+            }
+        })
+        .padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top)!-5) //yh
+//        .padding(.horizontal)
+            .background(Color("배경0"))
+    }
+}
+
+struct First : View { //첫번째 뷰
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: true) {
+            VStack(spacing: 0) {
+                ForEach(0..<1) {i in
+                    Image("imgSmartphone\(i)")
+                        .frame(width: 420.0, height: 300.0)
+                        .padding(.top, 80.0)
+                    .background(Color("배경0"))
+                }
+            }
+        }
+        .padding(.bottom, 18) //보이지않는 화면 아래로 스크롤이 내려감
+    }
+}
+
+struct Scnd : View { //두번째 뷰
+    var body: some View {
+        GeometryReader {_ in
+            VStack {
+                Text("Second View")
+            }
+        }
+        .background(Color.white)
+    }
+}
+
+struct Third : View { //세번째 뷰
+    var body: some View {
+        GeometryReader {_ in
+            VStack {
+                Text("Third View")
+            }
+        }
+        .background(Color.white)
     }
 }

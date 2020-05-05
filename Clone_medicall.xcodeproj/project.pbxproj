@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C18B2F43246197A800467566 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18B2F42246197A800467566 /* List.swift */; };
 		C1B6B494246044FA00119F79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B6B493246044FA00119F79 /* AppDelegate.swift */; };
 		C1B6B496246044FA00119F79 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B6B495246044FA00119F79 /* SceneDelegate.swift */; };
 		C1B6B498246044FA00119F79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B6B497246044FA00119F79 /* ContentView.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C18B2F42246197A800467566 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		C1B6B490246044F900119F79 /* Clone_medicall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clone_medicall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B6B493246044FA00119F79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1B6B495246044FA00119F79 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				C1B6B493246044FA00119F79 /* AppDelegate.swift */,
 				C1B6B495246044FA00119F79 /* SceneDelegate.swift */,
+				C18B2F42246197A800467566 /* List.swift */,
 				C1B6B497246044FA00119F79 /* ContentView.swift */,
 				C1B6B499246044FB00119F79 /* Assets.xcassets */,
 				C1B6B49E246044FB00119F79 /* LaunchScreen.storyboard */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1B6B494246044FA00119F79 /* AppDelegate.swift in Sources */,
+				C18B2F43246197A800467566 /* List.swift in Sources */,
 				C1B6B496246044FA00119F79 /* SceneDelegate.swift in Sources */,
 				C1B6B498246044FA00119F79 /* ContentView.swift in Sources */,
 			);
