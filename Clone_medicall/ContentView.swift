@@ -14,8 +14,9 @@ struct ContentView_Previews: PreviewProvider { //ContentView로딩
     }
 }
 
-struct Home : View { // Home: 모든 구성요소의 집합체
+struct Home : View {// Home: 모든 구성요소의 집합체
     
+    @State var isPresented: Bool = false
     @State var index = 1
     @State var offset : CGFloat = UIScreen.main.bounds.width //yh
     var width = UIScreen.main.bounds.width //yh
@@ -23,7 +24,7 @@ struct Home : View { // Home: 모든 구성요소의 집합체
     var body: some View {
         VStack(spacing: 0) {
             
-            AppBar(index: $index, offset: $offset) //offset: self.$offset
+            AppBar(isPresented: $isPresented, index: $index, offset: $offset) //offset: self.$offset
             
             GeometryReader {g in
                 HStack(spacing: 0) {
@@ -51,6 +52,7 @@ struct Home : View { // Home: 모든 구성요소의 집합체
             
                 
             }
+            
         }
         .animation(.default)
         .edgesIgnoringSafeArea(.all)
@@ -82,6 +84,7 @@ struct Home : View { // Home: 모든 구성요소의 집합체
 
 struct AppBar : View { //버튼을 담고있는 바
     
+    @Binding var isPresented: Bool
     @Binding var index : Int
     @Binding var offset : CGFloat
     var width = UIScreen.main.bounds.width
@@ -95,21 +98,43 @@ struct AppBar : View { //버튼을 담고있는 바
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.leading)
-                    .padding(.bottom)
+                    .padding(.top, 45.0)
                     .padding(.horizontal)
-                
             Spacer()
-            Button(action: {
                 
-            }) {
-                Image(systemName: "gear")
-                    .imageScale(.medium)
-                    .foregroundColor(Color.white)
-                    .frame(height: 40)
-                    .padding(.horizontal)
-                    .padding(.trailing)
-                }
+                NavigationView {
+                    
+                    Text("")
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            
+                        }) {
+                            Image(systemName: "bell.circle.fill")
+                                .font(Font.system(.title))
+                                .frame(minWidth: 10, maxWidth: 10)
+                        }
+                    )
+                }                .background(Color.black)
+                .frame(width: 50, height: 50)
             }
+//                NavigationView {
+//                    ListViews()
+//
+//                    DetailViews()
+//                }
+            
+//                NavigationView {
+//                    Button(action: {
+//                        withAnimation {
+//                            self.isPresented.toggle()
+//                        }
+//                    }, label: {
+//                        Image(systemName: "magnifyingglass.circle.fill")
+//                            .imageScale(.large)
+//                            .foregroundColor(Color.green)
+//                        })
+////            .frame(width: 100, height: 80)
+//                }
             
             HStack     {
                 Button (action: {
@@ -143,7 +168,7 @@ struct AppBar : View { //버튼을 담고있는 바
                 }
             }
         })
-        .padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top)!-5) //yh
+        .padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top)!) //yh
 //        .padding(.horizontal)
             .background(Color("배경0"))
     }
@@ -184,5 +209,35 @@ struct Third : View { //세번째 뷰
             }
         }
         .background(Color.white)
+    }
+}
+
+struct NavigationConfigurator: UIViewControllerRepresentable {
+    var configure: (UINavigationController) -> Void = { _ in }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
+        UIViewController()
+    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
+        if let nc = uiViewController.navigationController {
+            self.configure(nc)
+        }
+    }
+}
+
+struct ListViews: View {
+    var body: some View {
+        List(0 ..< 1) { item in
+            NavigationLink(destination: DetailView()) {
+            Text("Tap to see more!")
+            }
+        }
+//        .navigationBarTitle("hello, List")
+    }
+}
+
+struct DetailViews: View {
+    var body: some View {
+        Text("hello ⚙︎")
     }
 }
